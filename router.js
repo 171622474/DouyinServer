@@ -3,6 +3,7 @@ const axios = require('axios')
 const _ = require('lodash')
 const router = new Router()
 // 假的URL 转换真实的URL 
+let sum = 0
 function MyReplace(data){   
     return new Promise(async (resolve,reject)=>{
         var res = await axios.get(data)
@@ -13,7 +14,11 @@ function MyReplace(data){
     })
 }
 router.post('/api/douyin',async (ctx,next)=>{
+    sum+=1
+    console.log(sum)
+    
     try{
+
         const res = await axios.get(ctx.request.body.url)
         var reg = /(?<=playAddr: ").*?(?=")/ //匹配地址
         var resUrl = _.replace(reg.exec(res.data)[0],'playwm','play') //解析真实地址
